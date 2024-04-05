@@ -1,0 +1,30 @@
+schema {
+    query: Query
+}
+
+type CalendarEvent {
+    id: ID!
+    event_name: String!
+    event_description: String!
+    event_price: String!
+    event_start_date: String!
+    event_end_date: String!
+    event_location: String!
+}
+
+type CalendarEventResult {
+    success: Boolean!
+    errors: [String]
+    calendarEvent: CalendarEvent
+}
+
+type CalendarEventsResult {
+    success: Boolean!
+    errors: [String]
+    calendarEvent: [CalendarEvent]
+}
+
+type Query {
+    listCalendarEvents: CalendarEventsResult!
+    getCalendarEvent(id: ID!): CalendarEventResult!
+}
