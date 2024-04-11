@@ -39,3 +39,21 @@ class DBHandler:
             event_host_dict,
             [EventHost.host_calendar_id]
         )
+
+    def fetch_all_data(self, db_object):
+        try:
+            data = [item.to_dict() for item in db_object.query.all()]
+            print(data)
+            return {"success": True, db_object.__tablename__: data}
+        except Exception as error:
+            return {"success": False, "errors": [str(error)]}
+
+    def fetch_single_data(self, db_object, id):
+        try:
+            data = db_object.query.get(id).to_dict()
+            return {"success": True, db_object.__tablename__[:-1]: data}
+        except AttributeError:
+            return {"success": False, "errors": [f"{db_object.__name__} item matching {id} not found"]}
+
+
+db_handler = DBHandler()

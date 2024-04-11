@@ -1,5 +1,6 @@
 schema {
     query: Query
+    mutation: Mutation
 }
 
 type CalendarEvent {
@@ -53,4 +54,25 @@ type Query {
 
     listEventHosts: EventHostsResult!
     getEventHost(id: ID!): EventHostResult!
+}
+
+type Mutation {
+    createCalendarEvent(
+        host_event_id: String!
+        host_id: Int!
+        event_name: String!
+        event_description: String
+        event_price: Int
+        event_start_date: String!
+        event_end_date: String!
+        event_location: String!
+    ): CalendarEventResult!
+
+    createEventHost(
+        host_calendar_id: String!
+        host_name: String!
+        host_description: String
+        host_website: String
+        host_email: String
+    ): EventHostResult!
 }
