@@ -57,7 +57,7 @@ type Query {
 }
 
 type Mutation {
-    createCalendarEvent(
+    upsertCalendarEvent(
         host_event_id: String!
         host_id: Int!
         event_name: String!
@@ -68,11 +68,12 @@ type Mutation {
         event_location: String!
     ): CalendarEventResult!
 
-    createEventHost(
+    upsertEventHost(
         host_calendar_id: String!
         host_name: String!
         host_description: String
         host_website: String
         host_email: String
     ): EventHostResult!
+
 }

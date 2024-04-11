@@ -4,7 +4,7 @@ from typing import Optional
 
 
 @convert_kwargs_to_snake_case
-def create_event_host_resolver(
+def upsert_event_host_resolver(
         obj,
         info,
         host_calendar_id: str,
@@ -34,7 +34,7 @@ def create_event_host_resolver(
 
 
 @convert_kwargs_to_snake_case
-def create_calendar_event_resolver(
+def upsert_calendar_event_resolver(
         obj,
         info,
         host_event_id,
