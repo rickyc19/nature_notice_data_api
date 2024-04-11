@@ -3,11 +3,13 @@ from ariadne import load_schema_from_path, make_executable_schema, \
     graphql_sync, snake_case_fallback_resolvers, ObjectType
 from ariadne.constants import HTTP_STATUS_200_OK
 from flask import request, jsonify
-from api.queries import list_calendar_events_resolver, get_calendar_event_resolver
+from api.queries import list_calendar_events_resolver, get_calendar_event_resolver, list_event_hosts_resolver, get_event_host_resolver
 
 query = ObjectType("Query")
 query.set_field("listCalendarEvents", list_calendar_events_resolver)
 query.set_field("getCalendarEvent", get_calendar_event_resolver)
+query.set_field("listEventHosts", list_event_hosts_resolver)
+query.set_field("getEventHost", get_event_host_resolver)
 
 type_defs = load_schema_from_path("schema.graphql")
 schema = make_executable_schema(
