@@ -76,4 +76,7 @@ type Mutation {
         host_email: String
     ): EventHostResult!
 
+    deleteCalendarEvent(id: ID!): CalendarEventResult!
+    deleteEventHost(id: ID!): EventHostResult!
+
 }

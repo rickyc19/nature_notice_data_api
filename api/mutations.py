@@ -1,5 +1,6 @@
 from ariadne import convert_kwargs_to_snake_case
-from .db_handler import db_handler
+from .db_helpers import upsert_into_table, delete_entry
+from .db_schemas import CalendarEvent, EventHost
 from typing import Optional
 
 
@@ -20,7 +21,11 @@ def upsert_event_host_resolver(
             "host_website": host_website,
             "host_email": host_email
         }
-        event_host_dict["id"] = db_handler.upsert_event_hosts_table(event_host_dict)
+        event_host_dict["id"] = upsert_into_table(
+            EventHost,
+            event_host_dict,
+            [CalendarEvent.host_id, CalendarEvent.host_event_id]
+        )
         payload = {
             "success": True,
             "event_host": event_host_dict
@@ -56,7 +61,11 @@ def upsert_calendar_event_resolver(
             "event_end_date": event_end_date,
             "event_location": event_location
         }
-        calendar_event_dict["id"] = db_handler.upsert_calendar_events_table(calendar_event_dict)
+        calendar_event_dict["id"] = upsert_into_table(
+            CalendarEvent,
+            calendar_event_dict,
+            [CalendarEvent.host_id, CalendarEvent.host_event_id]
+        )
         payload = {
             "success": True,
             "calendar_event": calendar_event_dict
@@ -67,3 +76,13 @@ def upsert_calendar_event_resolver(
             "errors": [str(error)]
         }
     return payload
+
+
+@convert_kwargs_to_snake_case
+def delete_event_host_resolver(obj, info, id):
+    return delete_entry(EventHost, id)
+
+
+@convert_kwargs_to_snake_case
+def delete_calendar_event_resolver(obj, info, id):
+    return delete_entry(CalendarEvent, id)
