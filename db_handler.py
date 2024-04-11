@@ -1,22 +1,13 @@
-import os
 from sqlalchemy import create_engine
-from sqlalchemy.engine import URL
 from sqlalchemy.orm import sessionmaker
 from typing import Dict
 from api.db_schemas import EventHost, CalendarEvent
 from sqlalchemy.dialects.postgresql import insert
+from api import url
 
 
 class DBHandler:
     def __init__(self):
-        url = URL.create(
-            drivername="postgresql",
-            username="naturenotice",
-            host=os.environ.get("DB_HOST"),
-            database="db_nature_notice",
-            password=os.environ.get("DB_PASSWORD")
-        )
-
         engine = create_engine(url)
         Session = sessionmaker(bind=engine)
         self.session = Session()
@@ -48,9 +39,3 @@ class DBHandler:
             event_host_dict,
             [EventHost.host_calendar_id]
         )
-
-    def get_event_hosts(self):
-        return se
-
-    def get_calendar_events(self):
-        return self.session.query(CalendarEvent).all()

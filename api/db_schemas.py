@@ -1,13 +1,10 @@
 from sqlalchemy import Column, Integer, String, DateTime
-from sqlalchemy.orm import relationship, DeclarativeBase
+from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey
+from api import db
 
 
-class Base(DeclarativeBase):
-    pass
-
-
-class EventHost(Base):
+class EventHost(db.Model):
     __tablename__ = 'event_hosts'
     id = Column(Integer(), primary_key=True,  autoincrement=True)
     host_calendar_id = Column(String(100), index=True, unique=True)
@@ -29,7 +26,7 @@ class EventHost(Base):
         }
 
 
-class CalendarEvent(Base):
+class CalendarEvent(db.Model):
     __tablename__ = 'calendar_events'
     id = Column(Integer(), primary_key=True, autoincrement=True)
     host_id = Column(Integer(), ForeignKey('event_hosts.id'))
@@ -44,6 +41,7 @@ class CalendarEvent(Base):
     def to_dict(self):
         return {
             "id": self.id,
+            "host_id": self.host_id,
             "host_event_id": self.host_event_id,
             "event_name": self.event_name,
             "event_description": self.event_description,
