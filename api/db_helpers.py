@@ -9,8 +9,10 @@ def upsert_into_table(table, data_dict, index_elements) -> int:
         set_=data_dict,
         index_elements=index_elements
     ).returning(table.id)
+    print(on_conflict_statement)
 
     inserted_id = db.session.execute(on_conflict_statement).scalar()
+    print(inserted_id)
     db.session.commit()
 
     return inserted_id

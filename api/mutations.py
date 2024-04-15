@@ -24,7 +24,7 @@ def upsert_event_host_resolver(
         event_host_dict["id"] = upsert_into_table(
             EventHost,
             event_host_dict,
-            [CalendarEvent.host_id, CalendarEvent.host_event_id]
+            [EventHost.host_calendar_id]
         )
         payload = {
             "success": True,
